@@ -1,6 +1,6 @@
 
-var FAUCET_URL = 'faucet.royalforkblog.com'
-var http = require('http')
+var FAUCET_URL = 'http://faucet.royalforkblog.com'
+var request = require('request')
 var querystring = require('querystring')
 var concat = require('concat-stream')
 
@@ -10,25 +10,16 @@ function withdraw(address, amount, callback) {
     amount: amount
   })
 
-  var req = http.request({
-    host: FAUCET_URL,
-    port: '80',
-    path: '/',
-    method: 'POST',
+  var req = request.post(FAUCET_URL, {
+    body: data,
+    json: true,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Content-Length': data.length
     }
-  }, function(res) {
-    res.pipe(concat(function(buf) {
-      var json = JSON.parse(buf.toString())
-      if (res.statusCode === 200) callback(null, json)
-      else callback(json)
-    }))
+  }, function(err, resp, body) {
+    callback(err, body)
   })
-
-  req.write(data)
-  req.end()
 }
 
 module.exports = {

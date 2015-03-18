@@ -21,7 +21,12 @@
     "url": "https://github.com/tradle/tbtc-faucets/issues"
   },
   "homepage": "https://github.com/tradle/tbtc-faucets",
+  "browser": {
+    "request": "browser-request"
+  },
   "dependencies": {
-    "concat-stream": "^1.4.7"
+    "browser-request": "^0.3.3",
+    "concat-stream": "^1.4.7",
+    "request": "^2.53.0"
   }
 }

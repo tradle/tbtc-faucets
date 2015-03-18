@@ -1,6 +1,6 @@
 
-var FAUCET_URL = 'testnet.helloblock.io'
-var http = require('http')
+var FAUCET_URL = 'http://testnet.helloblock.io/v1/faucet/withdrawal'
+var request = require('request')
 var querystring = require('querystring')
 var concat = require('concat-stream')
 
@@ -10,30 +10,21 @@ function withdraw(address, amount, callback) {
     value: amount
   })
 
-  var req = http.request({
-    host: FAUCET_URL,
-    port: '80',
-    path: '/v1/faucet/withdrawal',
-    method: 'POST',
+  var req = request.post(FAUCET_URL, {
+    body: data,
+    json: true,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Content-Length': data.length
     }
-  }, function(res) {
-    res.pipe(concat(function(buf) {
-      var json = JSON.parse(buf.toString())
-      if (res.statusCode === 200) {
-        var txId = reverse(new Buffer(json.data.txHash, 'hex')).toString('hex')
-        callback(null, {
-          id: txId
-        })
-      }
-      else callback(json)
-    }))
-  })
+  }, function(err, resp, body) {
+    if (err) return callback(err)
 
-  req.write(data)
-  req.end()
+    var txId = reverse(new Buffer(body.data.txHash, 'hex')).toString('hex')
+    callback(null, {
+      id: txId
+    })
+  })
 }
 
 function reverse (buf) {
