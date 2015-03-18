@@ -1,0 +1,27 @@
+{
+  "name": "tbtc-faucets",
+  "version": "0.0.1",
+  "description": "withdraw testnet bitcoins from various faucets",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/*.js"
+  },
+  "author": "Mark Vayngrib <mark.vayngrib@lablz.com> (http://github.com/mvayngrib)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tradle/tbtc-faucets"
+  },
+  "keywords": [
+    "bitcoin",
+    "testnet",
+    "tradle"
+  ],
+  "bugs": {
+    "url": "https://github.com/tradle/tbtc-faucets/issues"
+  },
+  "homepage": "https://github.com/tradle/tbtc-faucets",
+  "dependencies": {
+    "concat-stream": "^1.4.7"
+  }
+}
