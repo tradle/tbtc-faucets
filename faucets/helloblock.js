@@ -10,15 +10,18 @@ function withdraw(address, amount, callback) {
     value: amount
   })
 
-  var req = request.post(FAUCET_URL, {
+  var req = request.post({
+    uri: FAUCET_URL,
     body: data,
-    json: true,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Content-Length': data.length
     }
   }, function(err, resp, body) {
     if (err) return callback(err)
+
+    body = JSON.parse(body)
+    if (resp.statusCode !== 200) return callback(body)
 
     var txId = reverse(new Buffer(body.data.txHash, 'hex')).toString('hex')
     callback(null, {
