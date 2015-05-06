@@ -2,15 +2,14 @@ var test = require('tape')
 var faucets = require('../')
 
 test('withdraw from each faucet', function(t) {
-  t.plan(Object.keys(faucets).length)
+  var names = Object.keys(faucets)
+  t.plan(names.length)
 
-  for (var faucet in faucets) {
-    (function() {
-      faucets[faucet].withdraw('mpjuaPusdVC5cKvVYCFX94bJX1SNUY8EJo', 1000, function(err, data) {
-        if (err) throw err
+  names.forEach(function(name) {
+    faucets[name].withdraw('mpjuaPusdVC5cKvVYCFX94bJX1SNUY8EJo', 1000, function(err, data) {
+      if (err) throw err
 
-        t.ok(data.id)
-      })
-    })()
-  }
+      t.ok(data.id)
+    })
+  })
 })
