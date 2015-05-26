@@ -14,9 +14,19 @@ function withdraw(address, amount, callback) {
     .end(function(err, resp) {
       if (err) return callback(err)
 
-      var body = JSON.parse(resp.text)
-      if (resp.statusCode !== 200) return callback(body)
-      else callback(null, body)
+      var body
+      try {
+        body = JSON.parse(resp.text)
+      } catch (err) {}
+
+      if (resp.statusCode !== 200) {
+        return callback(new Error('Error withdrawing from testnet faucet: ' + resp.text))
+      }
+      else if (!body) {
+        return callback(new Error('Failed to parse JSON response from testnet faucet: ' + resp.text))
+      }
+
+      callback(null, body)
     })
 }
 
