@@ -1,5 +1,7 @@
 
 var royalforkblog = require('./royalforkblog')
+var BlockCypher = require('./blockcypher')
 module.exports = {
-  RoyalForkBlog: royalforkblog
+  RoyalForkBlog: royalforkblog,
+  BlockCypher: BlockCypher
 }
