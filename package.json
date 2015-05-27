@@ -1,6 +1,6 @@
 {
   "name": "tbtc-faucets",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "withdraw testnet bitcoins from various faucets",
   "main": "index.js",
   "scripts": {
